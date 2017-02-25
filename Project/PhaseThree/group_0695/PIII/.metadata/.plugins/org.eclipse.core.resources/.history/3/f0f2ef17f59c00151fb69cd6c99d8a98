@@ -1,0 +1,244 @@
+package user;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import flight_itinerary_search.Flight;
+
+/**
+ * A class used to manage the reading and writing into files.
+ */
+
+public class DataHandler {
+
+	private static final String COMMA_DELIMITER = ",";
+	private List<Flight> flightsList;
+	private List<Client> clientsList;
+
+	/**
+	 * Constructor of the DataHandler class.
+	 */
+	public DataHandler() {
+	}
+
+	/**
+	 * 
+	 * Opens the file containing the list of all the flights, and reads all
+	 * flight information into an ArrayList.
+	 * 
+	 * @param path
+	 *            is the file containing the list of flights.
+	 * @throws IOException
+	 *             when an error occurs while manipulating the file.
+	 */
+	public void openFlightFile(String path) throws IOException {
+
+		List<Flight> flightsList = new ArrayList<Flight>();
+
+		String aline;
+
+		FileReader file = new FileReader(path);
+
+		BufferedReader bf = new BufferedReader(file);
+
+		while ((aline = bf.readLine()) != null) {
+
+			String[] items = aline.split(COMMA_DELIMITER);
+
+			String flightnumber = items[0];
+
+			String departureDateTime = items[1];
+
+			String arriveDateTime = items[2];
+
+			String airline = items[3];
+
+			String origin = items[4];
+
+			String destination = items[5];
+
+			double cost = Double.parseDouble(items[6]);
+
+			int seats = Integer.parseInt(items[7]);
+
+			Flight tempFlight = new Flight(flightnumber, departureDateTime,
+					arriveDateTime, airline, origin, destination, cost, seats);
+
+			if (this.flightsList.isEmpty()) {
+
+				flightsList.add(tempFlight);
+
+				this.flightsList = flightsList;
+
+			} else {
+
+				if (!(hasTheFlight(tempFlight, this.flightsList))) {
+
+					this.flightsList.add(tempFlight);
+
+				} else {
+
+					//overwrite the client if the flight is already there.
+					for (Flight flight: this.flightsList) {
+
+						if (flight.getFlightNumber() == flightnumber) {
+
+							this.flightsList.remove(flight);
+
+							this.flightsList.add(tempFlight);
+						}
+
+					}
+
+				}
+
+
+			}
+
+		}
+
+		this.flightsList = flightsList;
+
+		bf.close();
+
+	}
+
+	/**
+	 * 
+	 * Opens the file containing the list of all the clients, and reads all
+	 * client information into an ArrayList.
+	 * 
+	 * @param path
+	 *            is the file containing the list of clients.
+	 * @throws IOException
+	 *             when an error occurs while manipulating the file.
+	 */
+	public void openClientFile(String path) throws IOException {
+
+		List<Client> clientsList = new ArrayList<Client>();
+
+		String aline;
+
+		FileReader file = new FileReader(path);
+
+		BufferedReader bf = new BufferedReader(file);
+
+		while ((aline = bf.readLine()) != null) {
+
+			String[] items = aline.split(COMMA_DELIMITER);
+
+			String lastName = items[0];
+
+			String firstname = items[1];
+
+			String email = items[2];
+
+			String address = items[3];
+
+			String creditCardNumber = items[4];
+
+			String expiryDate = items[5];
+
+			Client tempClient = new Client(lastName, firstname, email, address,
+					creditCardNumber, expiryDate);
+
+			if (this.clientsList.isEmpty()) {
+
+				clientsList.add(tempClient);
+
+				this.clientsList = clientsList;
+
+			} else {
+
+				if (!(hasTheClient(tempClient, this.clientsList))) {
+
+					this.clientsList.add(tempClient);
+
+				} else {
+
+					//overwrite the client if the client is already there.
+					for (Client client: this.clientsList) {
+
+						if (client.getEmail() == email) {
+
+							this.clientsList.remove(client);
+
+							this.clientsList.add(tempClient);
+						}
+
+					}
+
+				}
+
+			}
+
+
+		}
+
+		bf.close();
+
+	}
+
+	/**
+	 * 
+	 * Returns the list of flights.
+	 * 
+	 * @return the list of flights.
+	 */
+	public List<Flight> getFlightsList() {
+
+		return flightsList;
+
+	}
+
+	/**
+	 * 
+	 * Returns the list of clients.
+	 * 
+	 * @return the list of clients.
+	 */
+	public List<Client> getClientsList() {
+
+		return clientsList;
+
+	}
+
+	//a helper function to test if the clientslist has the new client based on email address
+	private boolean hasTheClient(Client client, List<Client> clientslist) {
+
+		for (Client tempClient: clientslist) {
+
+			if (tempClient.getEmail() == client.getEmail()) {
+
+				return true;
+
+			}
+
+		}
+
+		return false;
+
+	}
+
+	//a helper function to test if the flightsList has the new client based on email address
+	private boolean hasTheFlight(Flight flight, List<Flight> flightsList) {
+
+		for (Flight tempFlight: flightsList) {
+
+			if (tempFlight.getFlightNumber() == flight.getFlightNumber()) {
+
+				return true;
+
+			}
+
+		}
+
+		return false;
+
+	}
+
+
+
+}

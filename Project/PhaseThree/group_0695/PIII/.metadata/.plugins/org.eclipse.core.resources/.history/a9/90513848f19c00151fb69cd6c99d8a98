@@ -1,0 +1,96 @@
+package user;
+
+import java.io.IOException;
+import java.util.List;
+
+import flight_itinerary_search.Flight;
+import flight_itinerary_search.Itinerary;
+
+public class Admin extends User{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	public Admin(){
+	}
+	
+	private DataHandler dh = new DataHandler();
+	
+	/**
+	 * 
+	 * Uploads personal and billing information of a client from a file.
+	 * 
+	 * @param path
+	 *            is the file containing information to be uploaded.
+	 * @throws IOException
+	 *             when an error occurs when reading the file.
+	 */
+	public void uploadClientFile(String path) throws IOException {
+
+		dh.openClientFile(path);
+
+	}
+	
+	/**
+	 * 
+	 * Uploads new flights to the list of flights from a file.
+	 * 
+	 * @param path
+	 *            is the file to upload.
+	 * @throws IOException
+	 *             when an error occurs when reading the file.
+	 */
+	public void uploadFlightFile(String path) throws IOException {
+
+		dh.openFlightFile(path);
+
+	}
+	
+	//view information for a client
+	public String viewClientInformation(Client client) {
+		
+		return client.returnClient();
+		
+	}
+	
+	//book itinerary for any client
+	public void bookItineraryForClient(Itinerary Itinerary, Client client) {
+		
+		client.bookItinerary(Itinerary);
+
+	}
+	
+	public String viewBookedItineraries(Client client) {
+		
+		
+		return client.viewItinerary();
+				
+	}
+	
+	/**
+	 * 
+	 * Reads the clients file to get the list of clients.
+	 * 
+	 * @return the list of all the clients.
+	 * @throws IOException
+	 *             when there is an error while reading the file.
+	 */
+	private List<Client> readClientFile() throws IOException {
+
+		return dh.getClientsList();
+
+	}
+	
+	public List<Flight> readFlightFile() throws IOException {
+
+		return dh.getFlightsList();
+
+	}
+	
+	
+	
+
+
+}

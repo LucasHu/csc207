@@ -1,0 +1,14 @@
+Scenario: Search all itineraries from Toronto to Venice on May 3, 2016.
+
+0) Client: Perform a search
+	given origin, destination, date and time
+1) ItinerariesSearch: Create a new ItinerariesSearch object
+	given origin, destination, date and time
+2) ItinerariesSearch: Find all possible itineraries
+	given origin, destination, date and time
+3) Itinerary: Create a new Itinerary object
+	given origin, destination, date and time
+4) Itinerary: Calculate the overall cost and travel time of the itinerary
+	given: the list of flights of this itinerary
+
+3 & 4 are executed in a loop until all the possible itineraries have been found.

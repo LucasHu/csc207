@@ -1,0 +1,161 @@
+package people.flightsearchproject.admin;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import flight_itinerary_search.Flight;
+import manager.ClientManager;
+import manager.FlightManager;
+import people.flightsearchproject.MainActivity;
+import people.flightsearchproject.R;
+import user.Client;
+import user.DataHandler;
+
+/**
+ * A class represents AdminUploadActivity.
+ *
+ */
+public class AdminUploadActivity extends Activity {
+
+    private ClientManager clientManager;
+    private FlightManager flightManager;
+
+    public static final String CSV_DIR = "csv_uploads";
+    
+	/**
+	 * onCreate method is called once the activity is triggered.
+	 * 
+	 * @param savedInstanceState
+	 *            is the saved instanced state.
+	 */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.admin_upload_activity);
+
+    }
+    
+	/**
+	 * Gets to the next activity by an onClick method. Upload clients.
+	 * 
+	 * @param view
+	 *            represents the parameter of an onClick method.
+	 * @throws IOException
+	 *             when there is an error while reading the file.
+	 * @throws ClassNotFoundException
+	 *             if the class is not found
+	 */
+    public void uploadClient(View view){
+
+        EditText clientCSVPath = (EditText) findViewById(R.id.upload_client_information_text);
+        String clientFilename = clientCSVPath.getText().toString();
+
+        File clientsCSVFile = new File(CSV_DIR, clientFilename);
+
+        new File("path/to/file.txt").isFile();
+
+        if (file.exists()) {
+            readFromFile(file.getPath());
+        } else {
+            file.createNewFile();
+        }
+
+
+        //TODO
+        /*
+        * regarder au niveau du path
+        * si non, toast, si oui
+        * alors lecture du fichier
+        * sauvegarde
+        * et TOAST !
+        *
+        */
+    }
+
+    File clientsFile = new File(MainActivity.DATABASEDIR, MainActivity.greg);
+    File flightsFile = new File(MainActivity.DATABASEDIR, MainActivity.REGE);
+
+    try {
+        clientManager = new ClientManager(clientsFile);
+    } catch (IOException e) {
+        e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+    }
+
+    try {
+        flightManager = new FlightManager(flightsFile);
+    } catch (IOException e) {
+        e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+    }
+
+
+
+    public void uploakjhdClient(View view) throws IOException{
+
+        DataHandler dh = new DataHandler();
+
+        File clientfile = new File(this.getApplicationContext().getFilesDir(), clientFileName);
+
+        dh.openClientFile(clientfile);
+
+        List<Client> clientListFromFile = dh.getClientsList();
+
+        for (Client client: clientListFromFile) {
+
+            if (!this.clientManager.hasTheClient(client)) {
+
+                this.clientManager.add(client);
+
+                //also add the new client into passwords.txt with new password "new_password";
+                File passwords = new File(this.getApplicationContext().getFilesDir(), MainActivity.PASSWORDSFILE);
+
+                dh.openPasswordFileAddClient(passwords, client);
+
+            } else {
+
+                this.clientManager.update(client);
+
+            }
+        }
+
+        this.clientManager.saveToFile();
+    }
+
+    public void uploadFlight(View view) throws IOException{
+
+        EditText flightFileField = (EditText) findViewById(R.id.upload_flight_information_text);
+        String flightPath = flightFileField.getText().toString();
+
+        DataHandler dh = new DataHandler();
+
+        dh.openClientFile(flightPath);
+
+        List<Flight> flightListFromFile = dh.getFlightsList();
+
+        for (Flight flight: flightListFromFile) {
+
+            if (!flightManager.hasTheFlight(flight.getFlightNumber())) {
+
+                flightManager.add(flight);
+
+            } else {
+                flightManager.removeFlight(flight.getFlightNumber());
+                flightManager.add(flight);
+
+            }
+        }
+
+        flightManager.saveToFile();
+    }
+
+}

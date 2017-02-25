@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="lucashu.flightsearchproject"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="23" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme" >
+        <activity android:name="lucashu.flightsearchproject.MainActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="lucashu.flightsearchproject.AdminItinerariesShowActivity" />
+        <activity android:name="lucashu.flightsearchproject.AdminMainActivity" />
+        <activity android:name="lucashu.flightsearchproject.AdminUploadActivity" />
+        <activity android:name="lucashu.flightsearchproject.AdminViewEditClientsActivity" />
+        <activity android:name="lucashu.flightsearchproject.AdminEditFlights" />
+        <activity android:name="lucashu.flightsearchproject.AdminNoSuchFlightActivity" />
+        <activity android:name="lucashu.flightsearchproject.AdminFlightEdittedSuccessfullyActivity" />
+        <activity android:name="lucashu.flightsearchproject.AdminViewClientActivity" />
+        <activity android:name="lucashu.flightsearchproject.AdminViewBookedItinerariesActivity" />
+        <activity android:name="lucashu.flightsearchproject.AdminNoSuchClientActivity" />
+        <activity android:name="lucashu.flightsearchproject.AdminEditClientActivity" />
+        <activity android:name="lucashu.flightsearchproject.AdminClientEidtSuccessfully" />
+        <activity android:name="lucashu.flightsearchproject.AdminShowSearchedFlightsActivity" />
+    </application>
+
+</manifest>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="people.flights"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="23" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme" >
+        <activity android:name="people.flightsearchproject.MainActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="people.flightsearchproject.AdminMainActivity" />
+        <activity android:name="people.flightsearchproject.ClientMainActivity" />
+        <activity android:name="people.flightsearchproject.client.ClientInfoActivity" />
+        <activity android:name="people.flightsearchproject.client.BookingsActivity" />
+        <activity android:name="people.flightsearchproject.client.SearchFlightsFormActivity" />
+        <activity android:name="people.flightsearchproject.client.SearchItinerariesFormActivity" />
+        <activity android:name="people.flightsearchproject.client.SearchFlightsResultsActivity" />
+        <activity android:name="people.flightsearchproject.client.SelectedFlightActivity" />
+        <activity android:name="people.flightsearchproject.client.EditClientInfoActivity" />
+        <activity android:name="people.flightsearchproject.client.SearchItinerariesResultsActivity" />
+        <activity android:name="people.flightsearchproject.admin.AdminClientEidtSuccessfully" />
+        <activity android:name="people.flightsearchproject.admin.AdminEditClientActivity" />
+        <activity android:name="people.flightsearchproject.admin.AdminEditFlights" />
+        <activity android:name="people.flightsearchproject.admin.AdminFlightEdittedSuccessfullyActivity" />
+        <activity android:name="people.flightsearchproject.admin.AdminFlightsShowActivity" />
+        <activity android:name="people.flightsearchproject.admin.AdminItinerariesShowActivity" />
+        <activity android:name="people.flightsearchproject.admin.AdminNoSuchClientActivity" />
+        <activity android:name="people.flightsearchproject.admin.AdminNoSuchFlightActivity" />
+        <activity android:name="people.flightsearchproject.admin.AdminShowSearchedFlightsActivity" />
+        <activity android:name="people.flightsearchproject.admin.AdminUploadActivity" />
+        <activity android:name="people.flightsearchproject.admin.AdminViewBookedItinerariesActivity" />
+        <activity android:name="people.flightsearchproject.admin.AdminViewClientActivity" />
+        <activity android:name="people.flightsearchproject.admin.AdminViewEditClientsActivity" />
+    </application>
+
+</manifest>

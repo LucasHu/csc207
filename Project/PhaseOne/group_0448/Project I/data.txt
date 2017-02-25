@@ -1,0 +1,19 @@
+This file describes the data structures and files used by the application.
+
+The User class uses :
+	- A generic list of Flight objects, that stores all the existing flights information from the "flights" file, by deserializating it at the launch of the app.
+	- A "flights" file, containing all the flights and their informations (cost, airline, origin, ...) by storing all the Flight objects serialized. This file is updated when an administrator adds or edits one or more new flights.
+
+The Client class uses :
+	- A generic list of Itinerary objects, representing all the booked itineraries. This list is built when a client (not new) logs in, from reading a "client" file.
+	- A "client" file, containing the list of booked itineraries of the client, plus the client's personal and billing information. This list of booked itineraries, the personal and billing information are serialized objects, that are deserialized when the client logs in. When a client books a new itinerary, this itinerary object is added to the generic list of Itinerary objects and the file is updated.
+
+The ItinerariesSearch class uses:
+	- A generic list of Itinerary objects, representing the list of all the possible itineraries that correspond to a single search query.
+
+The Itinerary class uses:
+	- A generic list of Flight objects, built when a search is performed.
+
+The Administrator class uses:
+	- A generic list of Client objects, that contains all the clients using the app. This list is built when an administrator log in, by reading each "client" file.
+	- The Administrator class inherits from the User class. Thus, the Administrator class can act on the flights information (adding or uploading new flights from a file for example)

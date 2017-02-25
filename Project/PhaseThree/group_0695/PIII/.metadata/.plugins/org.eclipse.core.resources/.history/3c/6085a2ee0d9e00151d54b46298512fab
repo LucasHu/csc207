@@ -1,0 +1,145 @@
+package people.flightsearchproject.admin;
+
+import java.io.IOException;
+
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+
+import manager.ClientManager;
+import manager.FlightManager;
+import people.flightsearchproject.MainActivity;
+import user.Client;
+import people.flightsearchproject.R;
+
+/**
+ * A class reprents AdminViewEditClientsActivity.
+ * 
+ * @author lucasminghu
+ *
+ */
+public class AdminViewEditClientsActivity extends AppCompatActivity {
+
+	public static final String VIEW_CLIENT = "viewclientdata";
+	public static final String VIEW_BOOKED_INTINERARIES = "viewbookeditineararies";
+	public static final String VIEW_EMAIL = "viewemail";
+
+	private ClientManager clientManager;
+	private FlightManager flightManager;
+
+	/**
+	 * onCreate method is called once the activity is triggered.
+	 * 
+	 * @param savedInstanceState
+	 *            is the saved instanced state.
+	 */
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_admin_view_edit_clients);
+
+		Intent intent = getIntent();
+
+		clientManager = (ClientManager) intent
+				.getSerializableExtra(MainActivity.CLIENT_MANAGER_KEY);
+		flightManager = (FlightManager) intent
+				.getSerializableExtra(MainActivity.FLIGHT_MANAGER_KEY);
+	}
+
+	/**
+	 * Gets to the next activity by an onClick method. View Client.
+	 * 
+	 * @param view
+	 *            represents the parameter of an onClick method.
+	 */
+	public void viewClient(View view) {
+
+		Client client = (Client) clientManager.getUser();
+		EditText emailField = (EditText) findViewById(
+				R.id.admin_clientedit_email_field);
+		String email = emailField.getText().toString();
+
+		String viewClientOutput;
+
+		if (!clientManager.hasTheClient(client)) {
+
+			viewClientOutput = "No such client!";
+
+		} else {
+
+			viewClientOutput = clientManager.getClients().get(email)
+					.returnClient();
+
+		}
+
+		Intent intent = new Intent(this, AdminViewClientActivity.class);
+		intent.putExtra(VIEW_CLIENT, viewClientOutput);
+
+		startActivity(intent);
+
+	}
+
+	/**
+	 * Gets to the next activity by an onClick method. View booked itineraries.
+	 * 
+	 * @param view
+	 *            represents the parameter of an onClick method.
+	 */
+	public void viewBookedItineraries(View view) {
+
+		Client client = (Client) clientManager.getUser();
+		EditText emailField = (EditText) findViewById(
+				R.id.admin_clientedit_email_field);
+		String email = emailField.getText().toString();
+
+		String viewBookedItinerariesListOutput;
+
+		if (!clientManager.hasTheClient(client)) {
+			viewBookedItinerariesListOutput = "No such client!";
+		} else {
+
+			Client tempClient = clientManager.getClients().get(email);
+
+			if (tempClient.viewItinerary() == "") {
+				viewBookedItinerariesListOutput = "This client didn't book any Itineraries";
+			} else {
+				viewBookedItinerariesListOutput = tempClient.viewItinerary();
+			}
+		}
+
+		Intent intent = new Intent(this,
+				AdminViewBookedItinerariesActivity.class);
+		intent.putExtra(VIEW_BOOKED_INTINERARIES,
+				viewBookedItinerariesListOutput);
+
+		startActivity(intent);
+
+	}
+
+	/**
+	 * Gets to the next activity by an onClick method. Edit client information.
+	 * 
+	 * @param view
+	 *            represents the parameter of an onClick method.
+	 */
+	public void editClient(View view) {
+
+		Client client = (Client) clientManager.getUser();
+		EditText emailField = (EditText) findViewById(
+				R.id.admin_clientedit_email_field);
+		String email = emailField.getText().toString();
+
+		if (!clientManager.hasTheClient(client)) {
+			Intent intent = new Intent(this, AdminNoSuchClientActivity.class);
+			startActivity(intent);
+		} else {
+			Intent intent = new Intent(this, AdminEditClientActivity.class);
+			intent.putExtra(VIEW_EMAIL, email);
+			intent.putExtra(MainActivity.CLIENT_MANAGER_KEY, clientManager);
+			startActivity(intent);
+		}
+
+	}
+}

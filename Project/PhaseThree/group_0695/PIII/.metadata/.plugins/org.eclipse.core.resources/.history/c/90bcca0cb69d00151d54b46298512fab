@@ -1,0 +1,326 @@
+package flight_itinerary_search;
+
+import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ * 
+ * A class used to store all the informations on a given flight (flight number,
+ * departure and arrival time, airline, origin, destination, cost and travel
+ * time.
+ * 
+ *
+ */
+public class Flight implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String flightNumber;
+	private String departureDateTime;
+	private String arriveDateTime;
+	private String airline;
+	private String origin;
+	private String destination;
+	private double cost;
+	private int seats;
+	private int bookedSeats = 0;
+	@SuppressWarnings("unused")
+	private long travelTime;
+	
+	/**
+	 * 
+	 * Constructor of the Flight class.
+	 * 
+	 * @param flightnumber
+	 *            is the unique number of the flight.
+	 * @param departureDateTime
+	 *            is the time when the plane takes off.
+	 * @param arriveDateTime
+	 *            is the time when the plane lands.
+	 * @param airline
+	 *            is the company performing the flight.
+	 * @param origin
+	 *            is the city where the plane takes off.
+	 * @param destination
+	 *            is the city where the plane lands.
+	 * @param cost
+	 *            is the price of the flight.
+	 */
+	public Flight(String flightnumber, String departureDateTime,
+			String arriveDateTime, String airline, String origin,
+			String destination, double cost, int seats) {
+
+		this.flightNumber = flightnumber;
+		this.departureDateTime = departureDateTime;
+		this.arriveDateTime = arriveDateTime;
+		this.airline = airline;
+		this.origin = origin;
+		this.destination = destination;
+		this.cost = cost;
+		this.seats = seats;
+
+		try {
+			this.travelTime = getTravelTime();
+		} catch (ParseException e) {	
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * 
+	 * Sets the number of the flight.
+	 * 
+	 * @param flightnumber
+	 *            is the unique number of the flight.
+	 */
+	public void setFlightNumber(String flightnumber) {
+		this.flightNumber = flightnumber;
+
+	}
+
+	/**
+	 * 
+	 * Returns the number of the flight.
+	 * 
+	 * @return the number of the flight.
+	 */
+	public String getFlightNumber() {
+		return this.flightNumber;
+	}
+
+	/**
+	 * 
+	 * Sets the time when the plane takes off.
+	 * 
+	 * @param departureDateTime
+	 *            is the time when the plane takes off.
+	 */
+	public void setDepartureDateTime(String departureDateTime) {
+		this.departureDateTime = departureDateTime;
+	}
+
+	/**
+	 * 
+	 * Returns the time when the plane takes off.
+	 * 
+	 * @return the time when the plane takes off.
+	 */
+	public String getDepartureDateTime() {
+		return this.departureDateTime;
+	}
+
+	/**
+	 * 
+	 * Sets the time when the plane lands.
+	 * 
+	 * @param arriveDateTime
+	 *            is the time when the plane lands.
+	 */
+	public void setArriveDateTime(String arriveDateTime) {
+		this.arriveDateTime = arriveDateTime;
+	}
+
+	/**
+	 * 
+	 * Returns the time when the plane lands.
+	 * 
+	 * @return the time when the plane lands.
+	 */
+	public String getArriveDateTime() {
+		return this.arriveDateTime;
+	}
+
+	/**
+	 * 
+	 * Sets the company performing the flight.
+	 * 
+	 * @param airline
+	 *            is the company performing the flight.
+	 */
+	public void setAirline(String airline) {
+		this.airline = airline;
+	}
+
+	/**
+	 * Returns the company performing the flight.
+	 * 
+	 * @return the company performing the flight.
+	 */
+	public String getAirline() {
+		return this.airline;
+	}
+
+	/**
+	 * 
+	 * Sets the city where the plane takes off.
+	 * 
+	 * @param origin
+	 *            is the city where the plane takes off.
+	 */
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
+
+	/**
+	 * 
+	 * Returns the city where the plane takes off.
+	 * 
+	 * @return the city where the plane takes off.
+	 */
+	public String getOrigin() {
+		return this.origin;
+	}
+
+	/**
+	 * 
+	 * Sets the the city where the plane lands.
+	 * 
+	 * @param destination
+	 *            is the city where the plane lands.
+	 */
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+
+	/**
+	 * 
+	 * Returns the city where the plane lands.
+	 * 
+	 * @return the city where the plane lands.
+	 */
+	public String getDestination() {
+		return this.destination;
+	}
+
+	/**
+	 * 
+	 * Sets the price of the flight.
+	 * 
+	 * @param cost
+	 *            is the price of the flight.
+	 */
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
+
+	/**
+	 * 
+	 * Returns the price of the flight.
+	 * 
+	 * @return the price of the flight.
+	 */
+	public double getCost() {
+		return this.cost;
+	}
+	
+	/**
+	 * Sets the number of seats the flight has.
+	 * @param seats is the number of seats the flight has.
+	 */
+	public void setSeats(int seats) {
+		this.seats = seats;
+	}
+	
+	/**
+	 * Returns the number of seats of the flight.
+	 * @return the number of seats of the flight.
+	 */
+	public int getSeats() {
+		return this.seats;
+	}
+
+	/**
+	 * 
+	 * Computes the time required to complete the flight from origin to
+	 * destination.
+	 * 
+	 * @return the time required to go from origin to destination by plane.
+	 * @throws ParseException
+	 *             when the parsing of the departureDateTime or the
+	 *             arrivalDateTime is incorrect.
+	 */
+	public long getTravelTime() throws ParseException {
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		Date startDate = new Date();
+		Date endDate = new Date();
+		long tempTravelTime;
+		
+		try {
+			startDate = format.parse(this.departureDateTime);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			endDate = format.parse(this.arriveDateTime);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		tempTravelTime = (endDate.getTime() - startDate.getTime())
+				/ (60 * 1000);
+
+		return tempTravelTime;
+		
+	}
+
+	/**
+	 * 
+	 * Returns a string containing the information about a flight
+	 * 
+	 * @return a string containing the information about a flight
+	 */
+	public String returnFlightWithTime() {
+
+		String returnedFlight = "";
+		returnedFlight = this.flightNumber + "," + this.departureDateTime + ","
+				+ this.arriveDateTime + "," + this.airline + "," + this.origin
+				+ "," + this.destination + "\n";
+		return returnedFlight;
+
+	}
+
+	/**
+	 * 
+	 * Returns the information about a flight, including its cost
+	 * 
+	 * @return the information about a flight, including its cost
+	 */
+	public String returnFlightWithTimeCost() {
+		
+		String returnedFlight = "";
+		
+		DecimalFormat decimalFormat = new DecimalFormat("#.00");
+
+		String costTwoDecimal = decimalFormat.format(this.cost);
+
+		returnedFlight = this.flightNumber + "," + this.departureDateTime + ","
+				+ this.arriveDateTime + "," + this.airline + "," + this.origin
+				+ "," + this.destination + "," + costTwoDecimal + "\n";
+
+		return returnedFlight;
+		
+	}
+	
+	public void bookFlight() {
+		this.bookedSeats ++;
+	}
+	
+	public boolean ifFullyBooked() {
+		
+		if (this.bookedSeats < this.seats) {
+			return false;
+		} else {
+			return true;
+		}
+	
+	}
+
+}

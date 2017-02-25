@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="people.flightsearchproject">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".AdminMainActivity" />
+        <activity android:name=".ClientMainActivity" />
+        <activity android:name=".client.ClientInfoActivity" />
+        <activity android:name=".client.BookingsActivity" />
+        <activity android:name=".client.SearchFlightsFormActivity" />
+        <activity android:name=".client.SearchItinerariesFormActivity" />
+        <activity android:name=".client.SearchFlightsResultsActivity" />
+        <activity android:name=".client.SelectedFlightActivity" />
+        <activity android:name=".client.EditClientInfoActivity" />
+        <activity android:name=".client.SearchItinerariesResultsActivity"></activity>
+        <activity android:name=".admin.AdminClientEidtSuccessfully" />
+        <activity android:name=".admin.AdminEditClientActivity" />
+        <activity android:name=".admin.AdminEditFlights" />
+        <activity android:name=".admin.AdminFlightEdittedSuccessfullyActivity" />
+        <activity android:name=".admin.AdminFlightsShowActivity" />
+        <activity android:name=".admin.AdminItinerariesShowActivity" />
+        <activity android:name=".admin.AdminNoSuchClientActivity" />
+        <activity android:name=".admin.AdminNoSuchFlightActivity" />
+        <activity android:name=".admin.AdminShowSearchedFlightsActivity" />
+        <activity android:name=".admin.AdminUploadActivity" />
+        <activity android:name=".admin.AdminViewBookedItinerariesActivity" />
+        <activity android:name=".admin.AdminViewClientActivity" />
+        <activity android:name=".admin.AdminViewEditClientsActivity" />
+    </application>
+
+</manifest>

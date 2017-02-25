@@ -1,0 +1,20 @@
+Scenario: Reviewer writes a review.
+
+0) System: addReview
+   given Reviewer, thumbsUP, comment, and Restaurant.
+1) Reviewer: writeReview
+   given thumbsUP, comment, and Restaurant.
+2) Review: Create a Review object
+   given thumbsUP, comment, and Reviewer.
+3) Restaurant: addReview
+   given Review 
+
+Note to students in Diane's class: A scenario walk-through involves thinking
+through the steps that would be required to carry out one of the scenarios
+that the software is designed to handle. It serves as a test case for your
+design, often revealing gaps and shortcomings in the design, which of course
+you should address until you find no more.
+
+In lecture, we did a scenario walk-through verbally, but didn't write it down.
+The format shown here is consistent with how we talked about it, and is how
+we'd like you to write your walk-through for Phase I.

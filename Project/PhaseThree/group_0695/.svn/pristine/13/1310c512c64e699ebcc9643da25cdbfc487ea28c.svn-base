@@ -1,0 +1,70 @@
+package lucashu.flightsearchproject;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+
+import java.io.File;
+import java.io.IOException;
+
+import manager.ClientManager;
+
+public class MainActivity extends Activity {
+
+    public static final String PATH = "/Users/lucasminghu/Desktop/PHD/CSC207 Software Design/Project/PhaseThree/group_0695/PIII/sampleTests/";
+
+    public static final String FILENAME = "clients.ser";
+    public static final String USERDATADIR = "userdata";
+    public static final String STUDENT_MANAGER_KEY = "clientManagerKey";
+
+    private ClientManager manager;
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Find out where this application stores files, and get
+        // the directory called USERDATADIR, or if it doesn't exist,
+        // create it.
+        File userdata = this.getApplicationContext().getDir(USERDATADIR, MODE_PRIVATE);
+        // Make a File object that stores this path to a file called FILENAME.
+        File clientsFile = new File(userdata, FILENAME);
+
+        // Initialize the StudentManager.  It will load data from studentsFile
+        // if it exists, and if not, will create a new empty file for it to be
+        // saved in later.
+        try {
+            manager = new ClientManager(clientsFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void Login(View view) {
+
+        Intent intet = new Intent(this, )
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

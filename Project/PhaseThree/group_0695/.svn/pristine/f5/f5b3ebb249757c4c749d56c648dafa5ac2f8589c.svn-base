@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">FlightSearchProject</string>
+    <string name="user_name">Username</string>
+    <string name="password">Password</string>
+    <string name="departure_date">Departure date (YYYY-MM-DD)</string>
+    <string name="origin">Travel origin</string>
+    <string name="destination">Destination</string>
+    <string name="search_flights">Search flights</string>
+    <string name="search_itineraries">Search itineraries</string>
+    <string name="login">Log in</string>
+    <string name="searched_flights"></string>
+    <string name="viewclient"></string>
+    <string name="admin_view_booked_itineraries"></string>
+    <string name="admin_show_searched_flights"></string>
+</resources>

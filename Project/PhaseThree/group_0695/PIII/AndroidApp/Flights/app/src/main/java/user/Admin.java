@@ -1,0 +1,126 @@
+package user;
+
+import java.io.IOException;
+import java.util.List;
+
+import flight_itinerary_search.Flight;
+import flight_itinerary_search.Itinerary;
+
+/**
+ * A class represents the Admin.
+ *
+ */
+public class Admin extends User {
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Construct the Admin.
+	 */
+	public Admin() {
+	}
+
+	private DataHandler dh = new DataHandler();
+
+	/**
+	 *
+	 * Uploads personal and billing information of a client from a file.
+	 *
+	 * @param path
+	 *            is the file containing information to be uploaded.
+	 * @throws IOException
+	 *             when an error occurs when reading the file.
+	 */
+	public void uploadClientFile(String path) throws IOException {
+
+		dh.openClientFile(path);
+
+	}
+
+	/**
+	 *
+	 * Uploads new flights to the list of flights from a file.
+	 *
+	 * @param path
+	 *            is the file to upload.
+	 * @throws IOException
+	 *             when an error occurs when reading the file.
+	 */
+	public void uploadFlightFile(String path) throws IOException {
+
+		dh.openFlightFile(path);
+
+	}
+
+	/**
+	 * Returns a string, which represents all the information of the client.
+	 * 
+	 * @param client
+	 *            is the client will be viewed.
+	 * @return a string, which represents all the information of the client.
+	 */
+	public String viewClientInformation(Client client) {
+
+		return client.returnClient();
+
+	}
+
+	/**
+	 * Books an itinerary for a client.
+	 * 
+	 * @param itinerary
+	 *            is the itinerary will be booked for the client.
+	 * @param client
+	 *            is the client will have an itinerary booked upon.
+	 */
+	public void bookItineraryForClient(Itinerary itinerary, Client client) {
+
+		client.bookItinerary(itinerary);
+
+	}
+
+	/**
+	 * Views all booked itineraries of a client.
+	 * 
+	 * @param client
+	 *            is the client will be viewed.
+	 * @return a string representation of all booked itineraries of a client.
+	 */
+	public String viewBookedItineraries(Client client) {
+
+		return client.viewItinerary();
+
+	}
+
+	/**
+	 *
+	 * Reads the clients file to get the list of clients.
+	 *
+	 * @return the list of all the clients.
+	 * @throws IOException
+	 *             when there is an error while reading the file.
+	 */
+	public List<Client> readClientFile() throws IOException {
+
+		return dh.getClientsList();
+
+	}
+
+	/**
+	 *
+	 * Reads the flights file to get the list of flights.
+	 *
+	 * @return the list of all the flights.
+	 * @throws IOException
+	 *             when there is an error while reading the file.
+	 */
+	public List<Flight> readFlightFile() throws IOException {
+
+		return dh.getFlightsList();
+
+	}
+
+}

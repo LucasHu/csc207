@@ -1,0 +1,67 @@
+package people.flightsearchproject.client;
+
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.TextView;
+
+import people.flightsearchproject.MainActivity;
+import people.flightsearchproject.R;
+import manager.ClientManager;
+import manager.FlightManager;
+import user.Client;
+
+/**
+ * A class represents ClientInfoActivity.
+ *
+ */
+public class ClientInfoActivity extends AppCompatActivity {
+
+    public static final String CLIENT_MANAGER_KEY = "clientManagerKey";
+    public static final String CURR_USER_KEY= "currentUserKey";
+
+    private ClientManager clientsManager;
+    public String currentUser;
+    private Client currentClient;
+    
+	/**
+	 * onCreate method is called once the activity is triggered.
+	 * 
+	 * @param savedInstanceState
+	 *            is the saved instanced state.
+	 */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_client_info);
+
+        Intent intent = getIntent();
+        clientsManager = (ClientManager) intent.getSerializableExtra(MainActivity.CLIENT_MANAGER_KEY);
+        currentUser = intent.getStringExtra(MainActivity.CURR_USER_KEY);
+        if(clientsManager.getClients().containsKey(currentUser)){
+            currentClient = clientsManager.getClients().get(currentUser);
+
+            TextView firstName = (TextView) findViewById(R.id.first_name_field);
+            firstName.setText("Firstname: " + currentClient.getFirstname());
+
+            TextView lastName = (TextView) findViewById(R.id.last_name_field);
+            lastName.setText("Lastname: " + currentClient.getLastName());
+
+            TextView email = (TextView) findViewById(R.id.email_field);
+            email.setText("Email: " + currentClient.getEmail());
+
+            TextView address = (TextView) findViewById(R.id.address_field);
+            address.setText("Address: " + currentClient.getAddress());
+
+            TextView creditCardNumber = (TextView) findViewById(R.id.credit_card_number_field);
+            creditCardNumber.setText("Credit card number: " + currentClient.getCreditCardNumber());
+
+            TextView expiracyDate = (TextView) findViewById(R.id.expiracy_date_field);
+            expiracyDate.setText("Expiracy date: " + currentClient.getExpiryDate());
+        }
+        else {
+            System.out.println("This client doesn't exist in the serFile");
+S
+        }
+    }
+}

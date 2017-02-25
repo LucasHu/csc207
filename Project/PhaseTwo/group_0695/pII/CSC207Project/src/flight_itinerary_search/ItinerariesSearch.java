@@ -1,0 +1,156 @@
+package flight_itinerary_search;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
+/**
+ * 
+ * A class used to perform an itineraries search.
+ * 
+ *
+ */
+public class ItinerariesSearch {
+
+	private FlightGraph flightGraph = new FlightGraph();
+
+	private List<Itinerary> itinerariesList = new ArrayList<Itinerary>();
+
+	/**
+	 * Constructor of the ItinerariesSearch class.
+	 */
+	public ItinerariesSearch() {
+	}
+
+	/**
+	 * 
+	 * Builds the list of all possibles itineraries that are solutions of a
+	 * given search query.
+	 * 
+	 * @param departureDate
+	 *            is the date of departure from the original city.
+	 * @param origin
+	 *            is the original city.
+	 * @param destination
+	 *            is the final city.
+	 * @param allFlightsList
+	 *            is the list of all the flights stored in the database.
+	 * @return the list of itineraries that bring someone from the "origin" city
+	 *         to the "destination" city, at the "departureDate" date.
+	 */
+	public List<Itinerary> findItineraries(String departureDate, String origin,
+			String destination, List<Flight> allFlightsList) {
+
+		flightGraph.addNode(allFlightsList);
+
+		flightGraph.addEdge(allFlightsList);
+
+		for (Flight startFlight : allFlightsList) {
+
+			String[] items = startFlight.getDepartureDateTime().split("\\s+");
+
+			if (startFlight.getOrigin().equals(origin)
+					&& items[0].equals(departureDate)) {
+
+				if (startFlight.getDestination().equals(destination)) {
+
+					String departureDateTime = startFlight
+							.getDepartureDateTime();
+
+					List<Flight> tempFlightsList = new ArrayList<Flight>();
+
+					tempFlightsList.add(startFlight);
+
+					Itinerary tempItinerary = new Itinerary(departureDateTime,
+							origin, destination, tempFlightsList);
+
+					itinerariesList.add(tempItinerary);
+
+				}
+
+				for (Flight endFlight : allFlightsList) {
+
+					if ((endFlight.getDestination().equals(destination))
+							&& !(endFlight.getOrigin().equals(origin))) {
+
+						Stack<Flight> connectionFilightLists = new Stack<Flight>();
+
+						connectionFilightLists.push(startFlight);
+
+						findAllRoutes(startFlight, endFlight,
+								connectionFilightLists);
+
+					}
+
+				}
+
+			}
+		}
+
+		return itinerariesList;
+	}
+
+	/**
+	 * 
+	 * Finds all the flights that link the very first flight that leaves the
+	 * origin city to the very last flight that lands in the destination city.
+	 * 
+	 * @param startFlight
+	 *            is the flight that takes off from the origin city.
+	 * @param endFlight
+	 *            is the flight that lands in the destination city.
+	 */
+
+	public void findAllRoutes(Flight startFlight, Flight endFlight,
+			Stack<Flight> connectionFilightLists) {
+
+		for (Flight nextFlight : flightGraph.getNeighbours(startFlight)) {
+
+			if (nextFlight.getFlightNumber() == endFlight.getFlightNumber()) {
+
+				connectionFilightLists.push(nextFlight);
+
+				List<Flight> connectionFilightLists2 = new ArrayList<Flight>();
+
+				for (Flight o : connectionFilightLists) {
+
+					connectionFilightLists2.add(o);
+
+				}
+
+				Itinerary tempItinerary = new Itinerary(
+						startFlight.getDepartureDateTime(),
+						startFlight.getOrigin(), endFlight.getDestination(),
+						connectionFilightLists2);
+
+				itinerariesList.add(tempItinerary);
+				
+				connectionFilightLists.pop();
+
+			} else if (!connectionFilightLists.contains(nextFlight)) {
+
+				connectionFilightLists.push(nextFlight);
+
+				findAllRoutes(nextFlight, endFlight, connectionFilightLists);
+
+				connectionFilightLists.pop();
+
+			}
+
+		}
+	}
+
+	/**
+	 * Returns the list of itineraries that link the origin city to the
+	 * destination city.
+	 * 
+	 * @return the list of itineraries that link the origin city to the
+	 *         destination city.
+	 */
+	public List<Itinerary> getItinerariesList() {
+
+		return itinerariesList;
+
+	}
+
+}
